@@ -1,0 +1,4 @@
+#!/bin/bash
+pkill -9 -f java || echo "Application is not running"
+nohup java -Xmx32m -Xms2m -jar /opt/applications/books-be/books-0.0.1-SNAPSHOT.jar > /opt/applications/books-be/books-be.log 2> /opt/applications/books-be/books-be.error &
+echo "Deployment complete"

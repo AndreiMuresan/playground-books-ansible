@@ -1,0 +1,28 @@
+- name: Provision backend servers
+  hosts: be-servers
+  become: yes
+  tasks:
+    - name: ensure java is installed
+      apt:
+        update_cache: true
+        name: "{{item}}"
+        state: present
+      with_items:
+      - openjdk-17-jdk
+      - openjdk-17-jre
+
+    - name: Creates nginx sites directory
+      file:
+        path: /opt/applications/books-be/
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: 0775
+
+    - name: Add deployment script
+      ansible.builtin.template:
+        src: templates/deploy_be.sh.j2
+        dest: /home/ubuntu/deploy.sh
+        owner: ubuntu
+        group: ubuntu
+        mode: 0744

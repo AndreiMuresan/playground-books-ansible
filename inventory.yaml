@@ -1,0 +1,17 @@
+fe-servers:
+  hosts:
+    books-ec2-1:
+      ansible_host: 54.160.68.142
+      ansible_ssh_private_key_file: ~/.ssh/tf-test.pem
+
+be-servers:
+  hosts:
+    books-ec2-1:
+      ansible_host: 54.160.68.142
+      ansible_ssh_private_key_file: ~/.ssh/tf-test.pem
+
+db-servers:
+  hosts:
+    books-ec2-1:
+      ansible_host: 54.160.68.142
+      ansible_ssh_private_key_file: ~/.ssh/tf-test.pem

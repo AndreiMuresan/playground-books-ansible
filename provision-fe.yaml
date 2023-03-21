@@ -1,0 +1,32 @@
+- name: Provision frontend servers
+  hosts: fe-servers
+  become: yes
+  tasks:
+    - name: ensure nginx is at the latest version
+      apt:
+        update_cache: true
+        name: nginx
+        state: latest
+    - name: start nginx
+      service: 
+        name: nginx
+        state: started
+        enabled: yes
+    - name: Creates nginx sites directory
+      file:
+        path: /opt/applications/books-fe/
+        state: directory
+        owner: ubuntu
+        group: ubuntu
+        mode: 0775
+    - name: Add nginx config
+      ansible.builtin.template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/default
+      notify:
+        - nginx restart
+  handlers:
+    - name: nginx restart
+      service:
+        name: nginx
+        state: restarted
